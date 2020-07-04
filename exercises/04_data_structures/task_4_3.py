@@ -10,3 +10,9 @@
 """
 
 config = "switchport trunk allowed vlan 1,3,10,20,30,100"
+
+tmp = config.split(' ')
+vans = tmp[-1]
+
+print(tmp)
+print(vans)

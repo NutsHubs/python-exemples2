@@ -10,3 +10,9 @@
 """
 
 mac = "AAAA:BBBB:CCCC"
+
+mac_tmp = mac.replace(':', '')
+b = bin(int(mac_tmp, 16))
+b = str(b).lstrip('0b')
+
+print(b)

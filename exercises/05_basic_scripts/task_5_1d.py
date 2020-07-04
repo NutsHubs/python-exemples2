@@ -43,3 +43,11 @@ london_co = {
         "routing": True,
     },
 }
+
+name_device = input('Input a device name: ')
+
+param = str(list(london_co.get(name_device))).replace("'", '').strip('[]')
+
+param_device = input(f'Input the device parameter ({param}): ')
+
+print(london_co.get(name_device).get(param_device.lower(), 'It is wrong parameter'))
