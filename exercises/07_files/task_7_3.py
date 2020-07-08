@@ -17,3 +17,16 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+with open('CAM_table.txt', 'r') as f:
+    for line in f.readlines():
+        line_list = line.strip().split(' ')
+        out_list = list()
+        for sp in range(len(line_list)):
+            if line_list[sp] != '':
+                out_list.append(line_list[sp])
+
+        else:
+            if out_list and out_list[0].isdigit() :
+                print(f' {out_list[0]:<8}{out_list[1]:<17}{out_list[3]}')
+
+

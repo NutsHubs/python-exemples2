@@ -15,5 +15,18 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
-
+from sys import argv
 ignore = ["duplex", "alias", "Current configuration"]
+
+file_read = argv[1]
+file_write = argv[2]
+
+with open(file_read) as f:
+    for line in f.readlines():
+        for i in ignore:
+            if line.find(i) != -1:
+                break
+        else:
+            with open(file_write, 'a') as a:
+                a.write(line)
+
