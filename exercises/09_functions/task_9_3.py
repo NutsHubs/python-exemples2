@@ -21,3 +21,40 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
+
+
+def get_int_vlan_map(config_filename):
+    """
+    :param config_filename:
+    :return: tuple(access{}, trunk{})
+    """
+    result = tuple()
+    with open(config_filename) as config_file:
+        access, trunk = dict(), dict()
+        interface, mode, vlans = str(), str(), str()
+        vlans_chk, mode_chk = False, False
+        for line_config in config_file.readlines():
+            line_config = line_config.strip()
+            if (vlans_chk and mode_chk):
+                if mode == 'access':
+                    access[interface] = int(vlans)
+                else:
+                    trunk[interface] = [int(vlan) for vlan in vlans.split(',')]
+                vlans_chk, mode_chk = False, False
+            if line_config.startswith('interface'):
+                interface = line_config.split()[1]
+                continue
+            elif (line_config.startswith('switchport access vlan') or
+                  line_config.startswith('switchport trunk allowed')):
+                vlans = line_config.split()[-1]
+                vlans_chk = True
+                continue
+            elif line_config.startswith('switchport mode'):
+                mode = line_config.split()[-1]
+                mode_chk = True
+                continue
+        result = (access, trunk)
+    return result
+
+
+print(get_int_vlan_map('config_sw1.txt'))
