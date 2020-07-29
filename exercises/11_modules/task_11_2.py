@@ -87,5 +87,5 @@ if __name__ == "__main__":
 
     topology = create_network_map(infiles)
     # рисуем топологию:
-    #draw_topology(topology)
+    draw_topology(topology)
     print(topology)
