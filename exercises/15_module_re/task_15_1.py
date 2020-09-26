@@ -22,3 +22,19 @@
 диапазоны адресов и так далее, так как обрабатывается вывод команды, а не ввод пользователя.
 
 """
+import re
+
+
+def get_ip_from_cfg(file_name):
+    result = list()
+    regex = re.compile(r'^(?=\s+ip address ).*?(?P<ip>(\d{1,3}\.)+\d{1,3}) (?P<mask>(\d{1,3}\.)+\d{1,3})')
+    with open(file_name) as f:
+        for line in f:
+            match = regex.search(line)
+            if match:
+                result.append(match.group('ip', 'mask'))
+    return result
+
+
+if __name__ == '__main__':
+    print(get_ip_from_cfg('config_r1.txt'))
