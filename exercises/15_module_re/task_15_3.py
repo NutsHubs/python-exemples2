@@ -31,3 +31,27 @@ object network LOCAL_10.1.9.5
 
 Во всех правилах для ASA интерфейсы будут одинаковыми (inside,outside).
 """
+import re
+
+def convert_ios_nat_to_asa(read_file, write_file):
+    result = ''
+    regexp = re.compile(r'^(?:\S+ ){4}'
+                        r'(?P<mode>\S+) '
+                        r'(?P<service>\S+) '
+                        r'(?P<host1>(?:\d{1,3}\.)+\d{1,3}) '
+                        r'(?P<port1>\d+) (?:\S+ ){2}'
+                        r'(?P<port2>\d+)', re.MULTILINE)
+    convert_line = 'object network LOCAL_{2}\n' \
+                   ' host {2}\n' \
+                   ' nat (inside,outside) {0} interface service {1} {3} {4}\n'
+    with open(read_file) as f:
+        for match_iter in regexp.finditer(f.read()):
+            temp_list = match_iter.group('mode', 'service', 'host1', 'port1', 'port2')
+            result += convert_line.format(*temp_list)
+
+    with open(write_file, 'w') as f:
+        f.write(result)
+
+
+if __name__ == '__main__':
+    print(convert_ios_nat_to_asa('cisco_nat_config.txt', 'temp.txt'))
