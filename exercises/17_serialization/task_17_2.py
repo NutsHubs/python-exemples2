@@ -63,7 +63,7 @@ def parse_sh_version(out_command: str):
 
 
 def write_inventory_to_csv(filenames_list: list, filename_csv: str):
-    with open(filename_csv, 'w') as fw:
+    with open(filename_csv, 'w', newline='') as fw:
         writer = csv.writer(fw, quoting=csv.QUOTE_ALL)
         writer.writerow(headers)
         for file in filenames_list:

@@ -48,9 +48,10 @@ def write_dhcp_snooping_to_csv(filenames: list, output: str):
                 tmp = [t for t in match.groups()]
                 tmp.insert(0, switch)
                 output_list.append(tmp)
-    with open(output, 'w') as f:
+    with open(output, 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerows(output_list)
+        for row in output_list:
+            writer.writerow(row)
 
 
 if __name__ == '__main__':

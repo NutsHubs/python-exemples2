@@ -49,5 +49,6 @@ def transform_topology(load_file_yaml: str):
     draw_topology(topology, 'topology.svg')
     return topology
 
+
 if __name__ == '__main__':
     transform_topology('topology.yaml')
